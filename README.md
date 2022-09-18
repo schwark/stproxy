@@ -29,7 +29,7 @@ armv8           arm64                   Only Raspberry Pi 4 and above
 
 2. Download the appropriate [release](https://github.com/schwark/stproxy/releases/latest)
 
-3. Download the config [file] (https://raw.githubusercontent.com/schwark/stproxy/main/config.json)
+3. Download the config [file](https://raw.githubusercontent.com/schwark/stproxy/main/config.json)
 
 4. Copy both files to any directory and Run it and specify directory of config.json file if there is an error without it
 
