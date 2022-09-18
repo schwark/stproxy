@@ -30,10 +30,10 @@ var (
 	config    Configuration
 )
 
-func read_config() Configuration {
+func read_config(dir string) Configuration {
 	configuration := Configuration{}
 	configuration.Port = "8081" // default port
-	file, err := os.Open("config.json")
+	file, err := os.Open(dir + "/config.json")
 	if err != nil {
 		log.Fatal("error:", err)
 	}
@@ -76,30 +76,22 @@ func (h *baseHandle) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func ssdp_server(wg *sync.WaitGroup, quit chan os.Signal) {
 	defer wg.Done()
 
-	st := flag.String("st", "urn:SmartThingsCommunity:device:GenericProxy:1", "ST: Type")
-	usn := flag.String("usn", "uuid:de8a5619-2603-40d1-9e21-1967952d7f86", "USN: ID")
-	loc := flag.String("loc", "http://127.0.0.1:8081/", "LOCATION: location header")
-	srv := flag.String("srv", "", "SERVER:  server header")
-	maxAge := flag.Int("maxage", 1800, "cache control, max-age")
-	ai := flag.Int("ai", 10, "alive interval")
-	v := flag.Bool("v", true, "verbose mode")
-	h := flag.Bool("h", false, "show help")
-	flag.Parse()
-	if *h {
-		flag.Usage()
-		return
-	}
-	if *v {
-		ssdp.Logger = log.New(os.Stderr, "[SSDP] ", log.LstdFlags)
-	}
+	st := "urn:SmartThingsCommunity:device:GenericProxy:1"
+	usn := "uuid:de8a5619-2603-40d1-9e21-1967952d7f86"
+	loc := "http://127.0.0.1:" + config.Port + "/"
+	srv := ""
+	maxAge := 1800
+	ai := 100
 
-	ad, err := ssdp.Advertise(*st, *usn, *loc, *srv, *maxAge)
+	ssdp.Logger = log.New(os.Stderr, "[SSDP] ", log.LstdFlags)
+
+	ad, err := ssdp.Advertise(st, usn, loc, srv, maxAge)
 	if err != nil {
 		log.Fatal(err)
 	}
 	var aliveTick <-chan time.Time
-	if *ai > 0 {
-		aliveTick = time.Tick(time.Duration(*ai) * time.Second)
+	if ai > 0 {
+		aliveTick = time.Tick(time.Duration(ai) * time.Second)
 	} else {
 		aliveTick = make(chan time.Time)
 	}
@@ -155,7 +147,14 @@ func main() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
-	config = read_config()
+	dir := flag.String("d", ".", "config directory")
+	h := flag.Bool("h", false, "show help")
+	flag.Parse()
+	if *h {
+		flag.Usage()
+		return
+	}
+	config = read_config(*dir)
 
 	wg.Add(2)
 	go ssdp_server(&wg, quit)

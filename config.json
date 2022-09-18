@@ -1,5 +1,6 @@
 {
     "Hosts": {
         "1": "https://www.alarm.com"
-    }
+    },
+    "Port": "8081"
 }
