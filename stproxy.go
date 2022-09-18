@@ -38,15 +38,16 @@ func read_config(dir string) Configuration {
 	} // default mapping
 	file, err := os.Open(dir + "/config.json")
 	if err != nil {
-		log.Fatal("error:", err)
+		log.Println("warning: no config file, using defaults : ", err)
+	} else {
+		defer file.Close()
+		decoder := json.NewDecoder(file)
+		err = decoder.Decode(&configuration)
+		if err != nil {
+			log.Fatal("error:", err)
+		}
+		log.Printf("Read proxy configuration: %v\n", configuration)
 	}
-	defer file.Close()
-	decoder := json.NewDecoder(file)
-	err = decoder.Decode(&configuration)
-	if err != nil {
-		log.Fatal("error:", err)
-	}
-	log.Printf("Read proxy configuration: %v\n", configuration)
 	return configuration
 }
 
