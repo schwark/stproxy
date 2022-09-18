@@ -53,12 +53,14 @@ func (h *baseHandle) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	rest := parts[2]
 	r.URL, _ = url.Parse(rest)
 
-	if fn, ok := hostProxy[prefix]; ok {
-		fn.ServeHTTP(w, r)
-		return
-	}
-
 	if target, ok := config.Hosts[prefix]; ok {
+		log.Println(r.Method + " " + config.Hosts[prefix] + " " + rest)
+
+		if fn, ok := hostProxy[prefix]; ok {
+			fn.ServeHTTP(w, r)
+			return
+		}
+
 		remoteUrl, err := url.Parse(target)
 		if err != nil {
 			log.Println("target parse fail:", err)
