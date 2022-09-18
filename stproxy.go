@@ -33,6 +33,9 @@ var (
 func read_config(dir string) Configuration {
 	configuration := Configuration{}
 	configuration.Port = "8081" // default port
+	configuration.Hosts = map[string]string{
+		"1": "https://www.alarm.com",
+	} // default mapping
 	file, err := os.Open(dir + "/config.json")
 	if err != nil {
 		log.Fatal("error:", err)
@@ -75,8 +78,11 @@ func (h *baseHandle) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("403: Host forbidden for path prefix " + prefix))
 }
 
-func ssdp_server(wg *sync.WaitGroup, quit chan os.Signal) {
+func ssdp_server(wg *sync.WaitGroup) {
 	defer wg.Done()
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
 	st := "urn:SmartThingsCommunity:device:GenericProxy:1"
 	usn := "uuid:de8a5619-2603-40d1-9e21-1967952d7f86"
@@ -111,8 +117,11 @@ loop:
 	ad.Close()
 }
 
-func proxy_server(wg *sync.WaitGroup, quit chan os.Signal) {
+func proxy_server(wg *sync.WaitGroup) {
 	defer wg.Done()
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
 	h := &baseHandle{}
 	http.Handle("/", h)
@@ -146,9 +155,6 @@ func proxy_server(wg *sync.WaitGroup, quit chan os.Signal) {
 func main() {
 	var wg sync.WaitGroup
 
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-
 	dir := flag.String("d", ".", "config directory")
 	h := flag.Bool("h", false, "show help")
 	flag.Parse()
@@ -159,8 +165,8 @@ func main() {
 	config = read_config(*dir)
 
 	wg.Add(2)
-	go ssdp_server(&wg, quit)
-	go proxy_server(&wg, quit)
+	go ssdp_server(&wg)
+	go proxy_server(&wg)
 
 	log.Println("Server initialized...")
 	wg.Wait()
