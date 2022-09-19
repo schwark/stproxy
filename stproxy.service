@@ -1,0 +1,11 @@
+[Unit]
+ Description=SmartThings Proxy
+ After=multi-user.target
+
+ [Service]
+ Type=simple 
+ ExecStart=/home/pi/stproxy-linux-arm -d /home/pi
+
+ [Install]
+ WantedBy=multi-user.target
+

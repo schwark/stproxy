@@ -37,4 +37,15 @@ armv8           arm64                   Only Raspberry Pi 4 and above
 stproxy-<os>-<arch> -d <config-directory>
 ```
 
+5. To add it so it starts on reboots automatically, you can add it as a systemd service on systems like Raspberry Pi and other linux systems that support it. The [stproxy.service](https://raw.githubusercontent.com/schwark/stproxy/main/stproxy.service) is included in the project. You need to only change the directory where the config file and the executable file are placed.
+
+```
+sudo cp stproxy.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl start stproxy     # test starting
+sudo systemctl status stproxy    # make sure it starts ok
+sudo systemctl enable stproxy    # enable for restart on reboot 
+```
+
+
 
