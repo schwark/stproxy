@@ -16,12 +16,13 @@ if the output is..
 ```
 output          architecture            examples
 ------          ------------            --------
-386             386                     really old windows or linux PCs
+x86             386                     really old windows or linux PCs
 x86_64          amd64                   most modern windows machines and most modern linux PCs 
                                         and modern Macs except M1/M2 based Macs
 amd64           amd64                   most modern windows machines and most modern linux PCs 
                                         and modern Macs except M1/M2 based Macs
-arm64           arm64                   Only Raspberry Pi 3 and above, and M1/M2 macs
+arm64           arm64                   M1/M2 macs
+aarch64         arm64                   Only Raspberry Pi 3 and above
 armv6           arm                     Most Raspberry Pis below v3
 armv7           arm                     Most Raspberry Pis below v3
 armv8           arm64                   Only Raspberry Pi 4 and above
