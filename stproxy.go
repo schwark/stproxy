@@ -30,13 +30,13 @@ var (
 	config    Configuration
 )
 
-func read_config(dir string) Configuration {
+func read_config(config string) Configuration {
 	configuration := Configuration{}
 	configuration.Port = "8081" // default port
 	configuration.Hosts = map[string]string{
 		"1": "https://www.alarm.com",
 	} // default mapping
-	file, err := os.Open(dir + "/config.json")
+	file, err := os.Open(config)
 	if err != nil {
 		log.Println("warning: no config file, using defaults : ", err)
 	} else {
@@ -156,14 +156,14 @@ func proxy_server(wg *sync.WaitGroup) {
 func main() {
 	var wg sync.WaitGroup
 
-	dir := flag.String("d", ".", "config directory")
+	c := flag.String("d", "config.json", "full path to config.json")
 	h := flag.Bool("h", false, "show help")
 	flag.Parse()
 	if *h {
 		flag.Usage()
 		return
 	}
-	config = read_config(*dir)
+	config = read_config(*c)
 
 	wg.Add(2)
 	go ssdp_server(&wg)
