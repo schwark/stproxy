@@ -4,7 +4,7 @@
 
  [Service]
  Type=simple 
- ExecStart=/home/pi/stproxy-linux-arm -d /home/pi
+ ExecStart=/home/pi/stproxy-linux-arm -d /home/pi/config.json
 
  [Install]
  WantedBy=multi-user.target
