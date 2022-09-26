@@ -1,5 +1,5 @@
-github.com/schwark/go-ssdp v0.0.0-20220919151758-73c92c6d2fff h1:e1dbjjsGB28vNNjjd4l/NDi0oC8wRvbuClzkGRDcWOs=
-github.com/schwark/go-ssdp v0.0.0-20220919151758-73c92c6d2fff/go.mod h1:nfCD8Gu7F5Q+0wkZb0hKa3w+67ODuneZywpR+S8iQnc=
+github.com/koron/go-ssdp v0.0.3 h1:JivLMY45N76b4p/vsWGOKewBQu6uf39y8l+AQ7sDKx8=
+github.com/koron/go-ssdp v0.0.3/go.mod h1:b2MxI6yh02pKrsyNoQUsk4+YNikaGhe4894J+Q5lDvA=
 golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4 h1:HVyaeDAYux4pnY+D/SiwmLOR36ewZ4iGQIIrtnuCjFA=
 golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4/go.mod h1:CfG3xpIq0wQ8r1q4Su4UZFWDARRcnwPjda9FqA0JpMk=
 golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e h1:fLOSk5Q00efkSvAm+4xcoXD+RRmLmmulPn5I3Y9F2EM=

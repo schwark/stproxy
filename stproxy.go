@@ -15,7 +15,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/schwark/go-ssdp"
+	"github.com/koron/go-ssdp"
 )
 
 type Configuration struct {
