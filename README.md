@@ -32,14 +32,16 @@ armv8           arm64                   Only Raspberry Pi 4 and above
 
 3. Download the config [file](https://raw.githubusercontent.com/schwark/stproxy/main/config.json)
 
-4. Copy both files to any directory and Run it and specify directory of config.json file if there is an error without it
+4. Copy both files to any directory
+
+5. Change to that directory in a terminal and specify directory of config.json file if there is an error without it
 
 ```
 chmod +x ./stproxy-<os>-<arch>     # only on linux/unix platforms
 ./stproxy-<os>-<arch> -d <config.json-location>
 ```
 
-5. To add it so it starts on reboots automatically, you can add it as a systemd service on systems like Raspberry Pi and other linux systems that support it. The [stproxy.service](https://raw.githubusercontent.com/schwark/stproxy/main/stproxy.service) is included in the project. You need to only change the directory where the config file and the executable file are placed.
+6. To add it so it starts on reboots automatically, you can add it as a systemd service on systems like Raspberry Pi and other linux systems that support it. The [stproxy.service](https://raw.githubusercontent.com/schwark/stproxy/main/stproxy.service) is included in the project. You need to only change the directory where the config file and the executable file are placed.
 
 ```
 sudo cp stproxy.service /etc/systemd/system/
