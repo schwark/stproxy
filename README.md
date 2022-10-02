@@ -17,6 +17,9 @@ if the output is..
 output          architecture            examples
 ------          ------------            --------
 x86             386                     really old windows or linux PCs
+i386            386                     really old windows or linux PCs
+i586            386                     really old windows or linux PCs
+i686            386                     Intel Atom processors and older windows machines
 x86_64          amd64                   most modern windows machines and most modern linux PCs 
                                         and modern Macs except M1/M2 based Macs
 amd64           amd64                   most modern windows machines and most modern linux PCs 
