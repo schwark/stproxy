@@ -128,7 +128,7 @@ func proxy_server(wg *sync.WaitGroup) {
 	http.Handle("/", h)
 
 	server := &http.Server{
-		Addr:    ":8081",
+		Addr:    ":" + config.Port,
 		Handler: h,
 	}
 	go func() {
